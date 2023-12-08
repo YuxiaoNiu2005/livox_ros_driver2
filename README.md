@@ -40,7 +40,7 @@ Desktop-Full installation is recommend.
 ### 2.1 Clone Livox ROS Driver 2 source code:
 
 ```shell
-git clone https://github.com/baiyeweiguang/livox_ros_driver2_humble
+git clone https://gitee.com/SMBU-POLARBEAR/livox_ros_driver2_humble.git
 ```
 
   **Note :**
