@@ -38,6 +38,15 @@ PubHandler &pub_handler() {
   return handler;
 }
 
+static ExtParameterDetailed extrinsic_global = {
+  {0, 0, 0},
+  {
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+  }
+};
+
 void PubHandler::Init() {}
 
 void PubHandler::Uninit() {
