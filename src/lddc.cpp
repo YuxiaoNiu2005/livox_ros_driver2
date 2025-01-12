@@ -123,7 +123,6 @@ void Lddc::PollingLidarPointCloudData(uint8_t index, LidarDevice *lidar) {
     if (kPointCloud2Msg == transfer_format_) {
       PublishPointcloud2(p_queue, index);
     } else if (kLivoxCustomMsg == transfer_format_) {
-      // PublishPointcloud2AndCustomMsg(p_queue, index);
       PublishCustomPointcloud(p_queue, index);
     } else if (kPclPxyziMsg == transfer_format_) {
       PublishPclMsg(p_queue, index);
@@ -181,7 +180,6 @@ void Lddc::PublishCustomPointcloud(LidarDataQueue *queue, uint8_t index) {
 
 void Lddc::PublishPointcloud2AndCustomMsg(LidarDataQueue *queue,
                                           uint8_t index) {
-  // printf("12312312321\n");
   while (!QueueIsEmpty(queue)) {
     StoragePacket pkg;
     QueuePop(queue, &pkg);

@@ -28,13 +28,11 @@
 #include <thread>
 #include <vector>
 
-
 #include "driver_node.h"
 #include "include/livox_ros_driver2.h"
 #include "include/ros_headers.h"
 #include "lddc.h"
 #include "lds_lidar.h"
-
 
 using namespace livox_ros;
 
@@ -69,13 +67,7 @@ DriverNode::DriverNode(const rclcpp::NodeOptions &node_options)
   this->get_parameter("output_data_type", output_type);
   this->get_parameter("frame_id", frame_id);
 
-  if (publish_freq > 100.0) {
-    publish_freq = 100.0;
-  } else if (publish_freq < 0.5) {
-    publish_freq = 0.5;
-  } else {
-    publish_freq = publish_freq;
-  }
+  publish_freq = std::clamp(publish_freq, 0.5, 100.0);
 
   future_ = exit_signal_.get_future();
 
@@ -113,11 +105,6 @@ DriverNode::DriverNode(const rclcpp::NodeOptions &node_options)
       std::make_shared<std::thread>(&DriverNode::ImuDataPollThread, this);
 }
 
-} // namespace livox_ros
-
-#include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(livox_ros::DriverNode)
-
 void DriverNode::PointCloudDataPollThread() {
   std::future_status status;
   std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -135,3 +122,8 @@ void DriverNode::ImuDataPollThread() {
     status = future_.wait_for(std::chrono::microseconds(0));
   } while (status == std::future_status::timeout);
 }
+
+} // namespace livox_ros
+
+#include <rclcpp_components/register_node_macro.hpp>
+RCLCPP_COMPONENTS_REGISTER_NODE(livox_ros::DriverNode)
