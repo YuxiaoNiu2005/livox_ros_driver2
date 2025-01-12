@@ -1,6 +1,6 @@
 # Livox ROS Driver 2
 
-Livox ROS Driver 2 is the 2nd-generation driver package used to connect LiDAR products produced by Livox, applicable for ROS (noetic recommended) and ROS2 (foxy or humble recommended).
+Livox ROS Driver 2 is the 2nd-generation driver package used to connect LiDAR products produced by Livox, applicable for ROS2 (foxy or humble recommended).
 
 ## ATTENTION
 
@@ -15,6 +15,8 @@ Livox ROS Driver 2 is the 2nd-generation driver package used to connect LiDAR pr
  /livox/lidar             | livox_ros_driver2/msg/CustomMsg | mid360 自定义消息类型
  /livox/lidar/pointcloud | sensor_msgs/msg/PointCloud2     | ROS2 点云消息格式
  /livox/imu               | sensor_msgs/msg/Imu             | mid360 机内 imu
+
+本功能包已内置预编译的 Livox SDK2，无需再次克隆编译安装。
 
 ## 1. Preparation
 
