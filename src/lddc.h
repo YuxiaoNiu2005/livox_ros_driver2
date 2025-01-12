@@ -29,7 +29,6 @@
 
 #include "comm/comm.h"
 #include "driver_node.h"
-#include "include/livox_ros_driver2.h"
 #include "lds.h"
 
 namespace livox_ros

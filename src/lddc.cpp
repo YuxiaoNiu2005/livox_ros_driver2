@@ -29,14 +29,11 @@
 #include <stdint.h>
 
 #include <cstdint>
-#include <iomanip>
 #include <iostream>
 
 #include "comm/comm.h"
 #include "comm/ldq.h"
 #include "driver_node.h"
-#include "include/ros_headers.h"
-#include "lds_lidar.h"
 
 namespace livox_ros
 {
@@ -146,7 +143,7 @@ void Lddc::PollingLidarImuData(uint8_t index, LidarDevice * lidar)
   }
 }
 
-void Lddc::PrepareExit(void)
+void Lddc::PrepareExit()
 {
   if (lds_) {
     lds_->PrepareExit();
@@ -304,7 +301,7 @@ void Lddc::InitPointcloud2Msg(const StoragePacket & pkg, PointCloud2 & cloud, ui
     point.tag = pkg.points[i].tag;
     point.line = pkg.points[i].line;
     point.timestamp = static_cast<double>(pkg.points[i].offset_time);
-    points.push_back(std::move(point));
+    points.push_back(point);
   }
   cloud.data.resize(pkg.points_num * sizeof(LivoxPointXyzrtlt));
   memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtlt));
@@ -360,7 +357,7 @@ void Lddc::FillPointsToCustomMsg(CustomMsg & livox_msg, const StoragePacket & pk
     point.line = points[i].line;
     point.offset_time = static_cast<uint32_t>(points[i].offset_time - pkg.base_time);
 
-    livox_msg.points.push_back(std::move(point));
+    livox_msg.points.push_back(point);
   }
 }
 
