@@ -18,6 +18,28 @@ Livox ROS Driver 2 is the 2nd-generation driver package used to connect LiDAR pr
 
 本功能包已内置预编译的 Livox SDK2，无需再次克隆编译安装。
 
+## 网络配置与连通性排查（重要）
+
+在使用 `rviz_MID360_launch.py` 等启动文件时，配置文件 `config/MID360_config.json` 中的 `host_net_info` 必须填写为“当前主机所在网卡的实际 IPv4 地址”（而不是一个固定示例地址）。
+
+- 如果你的有线网卡当前 IP 是 192.168.1.2/24，那么应将以下字段统一改为 `192.168.1.2`：
+  - `host_net_info.cmd_data_ip`
+  - `host_net_info.push_msg_ip`
+  - `host_net_info.point_data_ip`
+  - `host_net_info.imu_data_ip`
+  - `host_net_info.log_data_ip`（如不为空）
+- LiDAR 设备（如 MID360）的 IP 按实际设备为准（本仓库示例为 `192.168.1.151`）。
+
+快速自检建议：
+
+1) 查看本机网卡 IPv4：`ip -4 addr show`，确认你用于直连雷达的网卡（如 enpXX）是否在 192.168.1.0/24 网段，以及实际 IP（例如 192.168.1.2）。
+
+2) 连通性测试：`ping 192.168.1.151`（将 IP 换成你的雷达 IP）。若 0% 丢包且延迟稳定，说明链路正常。
+
+3) 若配置中写的是与实际不一致的 IP（例如写成了 192.168.1.50，但本机实际是 192.168.1.2），驱动绑定会失败或收不到数据。请将 `host_net_info` 更新为实际 IP，或在系统中为网卡新增该别名地址（高级用法，不推荐默认采用）。
+
+4) 启动文件 `launch/rviz_MID360_launch.py` 默认读取 `config/MID360_config.json`，请确保你修改的是该文件或相应被引用的配置。
+
 ## 1. Preparation
 
   **Note :**
